@@ -1,14 +1,15 @@
 <!DOCTYPE html>
+
 <html lang="zh-TW">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="工程常用的金額、比例、面積、單位、日期與工期計算工具。所有計算只在瀏覽器內完成。">
-<meta name="theme-color" content="#315267">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="工程計算">
-<meta name="robots" content="index,follow">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="工程常用的金額、比例、面積、單位、日期與工期計算工具。所有計算只在瀏覽器內完成。" name="description"/>
+<meta content="#315267" name="theme-color"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="default" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="工程計算" name="apple-mobile-web-app-title"/>
+<meta content="index,follow" name="robots"/>
 <title>工程計算工具箱｜線上版</title>
 <style>
 :root{
@@ -313,6 +314,77 @@ input:focus,select:focus{
   font-size:12px;
 }
 .check-row input{width:auto}
+
+.quote-entry-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px;
+}
+.quote-entry{
+  display:grid;
+  grid-template-columns:minmax(105px,.72fr) minmax(0,1.28fr);
+  gap:8px;
+  padding:10px;
+  border:1px solid var(--line);
+  border-radius:11px;
+  background:var(--surface-2);
+}
+.quote-options{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px;
+  margin-top:10px;
+}
+.compare-table-wrap{
+  width:100%;
+  overflow-x:auto;
+  margin-top:10px;
+  border:1px solid rgba(49,82,103,.16);
+  border-radius:9px;
+  background:rgba(255,255,255,.58);
+}
+.compare-table{
+  width:100%;
+  min-width:650px;
+  border-collapse:collapse;
+  color:inherit;
+  font-size:12px;
+}
+.compare-table.compact{min-width:520px}
+.compare-table th,.compare-table td{
+  padding:8px 9px;
+  border-bottom:1px solid rgba(49,82,103,.12);
+  border-right:1px solid rgba(49,82,103,.10);
+  text-align:right;
+  white-space:nowrap;
+}
+.compare-table th{
+  background:rgba(255,255,255,.62);
+  font-weight:900;
+}
+.compare-table th:first-child,.compare-table td:first-child{text-align:left}
+.compare-table tr:last-child td{border-bottom:0}
+.compare-table th:last-child,.compare-table td:last-child{border-right:0}
+.compare-title{
+  margin-top:12px;
+  font-weight:900;
+  color:var(--accent);
+}
+.quote-badge{
+  display:inline-block;
+  margin-left:5px;
+  padding:2px 6px;
+  border-radius:999px;
+  background:rgba(255,255,255,.72);
+  font-size:10px;
+  font-weight:900;
+}
+@media(max-width:700px){
+  .quote-entry-grid,.quote-options{grid-template-columns:1fr}
+}
+@media(max-width:430px){
+  .quote-entry{grid-template-columns:1fr}
+}
 .footer{
   padding:18px 0 4px;
   color:#84909a;
@@ -360,394 +432,244 @@ input:focus,select:focus{
 </head>
 <body>
 <div class="app">
-  <header class="header">
-    <div class="brand">算</div>
-    <div class="header-copy">
-      <h1>工程計算工具箱</h1>
-      <p>常用的金額、單位與日期計算｜所有計算只在瀏覽器內完成，不上傳、不保存</p>
-    </div>
-    <div class="header-actions">
-      <span class="version">線上版 v3.1</span>
-      <button class="btn danger" id="clearAllBtn">全部清除</button>
-    </div>
-  </header>
-
-  <nav class="tabs" aria-label="工具分類">
-    <button class="tab active" data-page="moneyPage">金額與比例</button>
-    <button class="tab" data-page="unitPage">面積與單位</button>
-    <button class="tab" data-page="datePage">日期與工期</button>
-  </nav>
-
-  <main>
-    <section class="page active" id="moneyPage">
-      <div class="section-heading">
-        <h2>金額與比例</h2>
-        <p>議價、稅金、中文大寫與成本分析</p>
-      </div>
-
-      <div class="grid">
-        <article class="card full">
-          <div class="card-head">
-            <span class="card-index">01</span>
-            <div>
-              <h3>這個價格是那個價格的幾成？</h3>
-              <p class="card-note">「比較價格」放前面，「基準價格」放後面；同時顯示成數、百分比、折數及價差。</p>
-            </div>
-          </div>
-
-          <div class="fields">
-            <div class="field">
-              <label for="ratioBase">基準價格／原價格（元）</label>
-              <input type="text" inputmode="decimal" id="ratioBase" placeholder="例：100000">
-            </div>
-            <div class="field">
-              <label for="ratioCompare">比較價格／目前價格（元）</label>
-              <input type="text" inputmode="decimal" id="ratioCompare" placeholder="例：80000">
-            </div>
-          </div>
-
-          <div class="inline-actions">
-            <button class="btn soft" id="swapRatioBtn">交換兩個價格</button>
-          </div>
-
-          <div class="hero-result" id="ratioMetrics">
-            <div class="metric main">
-              <div class="metric-label">比較價格是基準價格的</div>
-              <div class="metric-value" id="ratioCheng">— 成</div>
-              <div class="metric-sub" id="ratioSentence">請輸入兩個價格</div>
-            </div>
-            <div class="metric">
-              <div class="metric-label">百分比</div>
-              <div class="metric-value" id="ratioPercent">—%</div>
-            </div>
-            <div class="metric">
-              <div class="metric-label">折數</div>
-              <div class="metric-value" id="ratioDiscount">— 折</div>
-            </div>
-            <div class="metric">
-              <div class="metric-label">差額</div>
-              <div class="metric-value" id="ratioDifference">—</div>
-            </div>
-          </div>
-
-          <div class="formula" id="ratioFormula">
-            算法：比較價格 ÷ 基準價格 × 10 ＝ 幾成。例：80,000 ÷ 100,000 × 10 ＝ 8 成。
-          </div>
-        </article>
-
-        <article class="card">
-          <div class="card-head">
-            <span class="card-index">02</span>
-            <div>
-              <h3>營業稅</h3>
-              <p class="card-note">未稅轉含稅，或由含稅總額反推未稅與稅額。</p>
-            </div>
-          </div>
-          <div class="fields">
-            <div class="field">
-              <label for="taxAmount">輸入金額（元）</label>
-              <input type="text" inputmode="decimal" id="taxAmount" placeholder="例：62000">
-            </div>
-            <div class="field">
-              <label for="taxMode">計算方向</label>
-              <select id="taxMode">
-                <option value="exclusive">未稅 → 含稅</option>
-                <option value="inclusive">含稅 → 未稅</option>
-              </select>
-            </div>
-            <div class="field">
-              <label for="taxRate">稅率（%）</label>
-              <input type="number" inputmode="decimal" id="taxRate" value="5" min="0" step="0.1">
-            </div>
-          </div>
-          <label class="check-row">
-            <input type="checkbox" id="taxRound" checked>
-            金額四捨五入至整數元
-          </label>
-          <div class="result" id="taxResult">請輸入金額。<button class="copy" data-copy="taxResult">複製</button></div>
-        </article>
-
-        <article class="card">
-          <div class="card-head">
-            <span class="card-index">03</span>
-            <div>
-              <h3>金額轉中文大寫</h3>
-              <p class="card-note">適合合約、簽呈及工程確認單金額。</p>
-            </div>
-          </div>
-          <div class="field">
-            <label for="chineseAmount">輸入金額（元）</label>
-            <input type="text" inputmode="decimal" id="chineseAmount" placeholder="例：1234567">
-          </div>
-          <div class="result neutral" id="chineseResult">請輸入金額。<button class="copy" data-copy="chineseResult">複製</button></div>
-        </article>
-
-        <article class="card">
-          <div class="card-head">
-            <span class="card-index">04</span>
-            <div>
-              <h3>售價與成本分析</h3>
-              <p class="card-note">顯示價差、毛利率、成本占比及成本加價率。</p>
-            </div>
-          </div>
-          <div class="fields">
-            <div class="field">
-              <label for="salePrice">售價（元）</label>
-              <input type="text" inputmode="decimal" id="salePrice" placeholder="例：100000">
-            </div>
-            <div class="field">
-              <label for="costPrice">成本（元）</label>
-              <input type="text" inputmode="decimal" id="costPrice" placeholder="例：75000">
-            </div>
-          </div>
-          <div class="result orange" id="profitResult">請輸入售價與成本。<button class="copy" data-copy="profitResult">複製</button></div>
-        </article>
-
-        <article class="card">
-          <div class="card-head">
-            <span class="card-index">05</span>
-            <div>
-              <h3>項目占總價比例</h3>
-              <p class="card-note">可算管理費、追加款、某工項占工程總價多少。</p>
-            </div>
-          </div>
-          <div class="fields">
-            <div class="field">
-              <label for="totalAmount">總價（元）</label>
-              <input type="text" inputmode="decimal" id="totalAmount" placeholder="例：50000000">
-            </div>
-            <div class="field">
-              <label for="partAmount">項目金額（元）</label>
-              <input type="text" inputmode="decimal" id="partAmount" placeholder="例：2500000">
-            </div>
-          </div>
-          <div class="result" id="partResult">請輸入總價與項目金額。<button class="copy" data-copy="partResult">複製</button></div>
-        </article>
-      </div>
-    </section>
-
-    <section class="page" id="unitPage">
-      <div class="section-heading">
-        <h2>面積與單位</h2>
-        <p>坪數、才數與面積單價</p>
-      </div>
-
-      <div class="grid">
-        <article class="card full">
-          <div class="card-head">
-            <span class="card-index">01</span>
-            <div>
-              <h3>面積與每坪單價</h3>
-              <p class="card-note">輸入總金額及面積，自動顯示每坪與每平方公尺單價。</p>
-            </div>
-          </div>
-          <div class="fields three">
-            <div class="field">
-              <label for="areaTotal">總金額（元）</label>
-              <input type="text" inputmode="decimal" id="areaTotal" placeholder="例：12000000">
-            </div>
-            <div class="field">
-              <label for="areaValue">面積</label>
-              <input type="number" inputmode="decimal" id="areaValue" placeholder="例：12685">
-            </div>
-            <div class="field">
-              <label for="areaUnit">輸入單位</label>
-              <select id="areaUnit">
-                <option value="sqm">平方公尺（m²）</option>
-                <option value="ping">坪</option>
-              </select>
-            </div>
-          </div>
-          <div class="result neutral" id="areaResult">請輸入總金額與面積。<button class="copy" data-copy="areaResult">複製</button></div>
-        </article>
-
-        <article class="card">
-          <div class="card-head">
-            <span class="card-index">02</span>
-            <div>
-              <h3>平方公尺／坪</h3>
-              <p class="card-note">1 坪＝3.305785 平方公尺。</p>
-            </div>
-          </div>
-          <div class="fields">
-            <div class="field">
-              <label for="pingValue">輸入數值</label>
-              <input type="number" inputmode="decimal" id="pingValue" placeholder="例：100">
-            </div>
-            <div class="field">
-              <label for="pingMode">換算方向</label>
-              <select id="pingMode">
-                <option value="sqmToPing">m² → 坪</option>
-                <option value="pingToSqm">坪 → m²</option>
-              </select>
-            </div>
-          </div>
-          <div class="result" id="pingResult">請輸入數值。<button class="copy" data-copy="pingResult">複製</button></div>
-        </article>
-
-        <article class="card">
-          <div class="card-head">
-            <span class="card-index">03</span>
-            <div>
-              <h3>平方公尺／才</h3>
-              <p class="card-note">依原計算本公式：1 m²＝10.89 才。</p>
-            </div>
-          </div>
-          <div class="fields">
-            <div class="field">
-              <label for="caiValue">輸入數值</label>
-              <input type="number" inputmode="decimal" id="caiValue" placeholder="例：24">
-            </div>
-            <div class="field">
-              <label for="caiMode">換算方向</label>
-              <select id="caiMode">
-                <option value="sqmToCai">m² → 才</option>
-                <option value="caiToSqm">才 → m²</option>
-              </select>
-            </div>
-          </div>
-          <div class="result orange" id="caiResult">請輸入數值。<button class="copy" data-copy="caiResult">複製</button></div>
-        </article>
-
-        <article class="card full">
-          <div class="card-head">
-            <span class="card-index">04</span>
-            <div>
-              <h3>尺寸才數</h3>
-              <p class="card-note">輸入寬、高及數量，計算單件與總才數；單件報價可不填。</p>
-            </div>
-          </div>
-          <div class="fields three">
-            <div class="field">
-              <label for="sizeW">寬 W（mm）</label>
-              <input type="number" inputmode="decimal" id="sizeW" placeholder="例：900">
-            </div>
-            <div class="field">
-              <label for="sizeH">高 H（mm）</label>
-              <input type="number" inputmode="decimal" id="sizeH" placeholder="例：2100">
-            </div>
-            <div class="field">
-              <label for="sizeQty">數量</label>
-              <input type="number" inputmode="numeric" id="sizeQty" min="0" step="1" value="1">
-            </div>
-            <div class="field">
-              <label for="sizePrice">單件報價（元，選填）</label>
-              <input type="text" inputmode="decimal" id="sizePrice" placeholder="例：2911">
-            </div>
-          </div>
-          <div class="result neutral" id="sizeResult">請輸入寬度與高度。<button class="copy" data-copy="sizeResult">複製</button></div>
-        </article>
-      </div>
-    </section>
-
-    <section class="page" id="datePage">
-      <div class="section-heading">
-        <h2>日期與工期</h2>
-        <p>工期、日期加減與民國西元換算</p>
-      </div>
-
-      <div class="grid">
-        <article class="card full">
-          <div class="card-head">
-            <span class="card-index">01</span>
-            <div>
-              <h3>工期起訖日與天數</h3>
-              <p class="card-note">起訖日均計入；工作天僅扣除週六、週日，不含國定假日。</p>
-            </div>
-          </div>
-          <div class="fields three">
-            <div class="field">
-              <label for="startDate">開始日期</label>
-              <input type="date" id="startDate">
-            </div>
-            <div class="field">
-              <label for="endDate">結束日期</label>
-              <input type="date" id="endDate">
-            </div>
-            <div class="field">
-              <label for="dayMode">主要顯示</label>
-              <select id="dayMode">
-                <option value="calendar">日曆天</option>
-                <option value="working">工作天（扣週末）</option>
-              </select>
-            </div>
-          </div>
-          <div class="result" id="daysResult">請選擇開始與結束日期。<button class="copy" data-copy="daysResult">複製</button></div>
-        </article>
-
-        <article class="card">
-          <div class="card-head">
-            <span class="card-index">02</span>
-            <div>
-              <h3>日期加減</h3>
-              <p class="card-note">可加減天、月、年，月底會自動調整。</p>
-            </div>
-          </div>
-          <div class="fields">
-            <div class="field">
-              <label for="dateBase">基準日期</label>
-              <input type="date" id="dateBase">
-            </div>
-            <div class="field">
-              <label for="dateAmount">數量</label>
-              <input type="number" inputmode="numeric" id="dateAmount" step="1" placeholder="例：45">
-            </div>
-            <div class="field">
-              <label for="dateAction">運算</label>
-              <select id="dateAction">
-                <option value="add">加</option>
-                <option value="subtract">減</option>
-              </select>
-            </div>
-            <div class="field">
-              <label for="dateUnit">單位</label>
-              <select id="dateUnit">
-                <option value="day">天</option>
-                <option value="month">個月</option>
-                <option value="year">年</option>
-              </select>
-            </div>
-          </div>
-          <div class="result neutral" id="dateResult">請選擇日期並輸入數量。<button class="copy" data-copy="dateResult">複製</button></div>
-        </article>
-
-        <article class="card">
-          <div class="card-head">
-            <span class="card-index">03</span>
-            <div>
-              <h3>民國／西元轉換</h3>
-              <p class="card-note">民國日期可輸入 115/07/28、115-07-28 或 115.07.28。</p>
-            </div>
-          </div>
-          <div class="fields">
-            <div class="field">
-              <label for="dateConvertMode">轉換方向</label>
-              <select id="dateConvertMode">
-                <option value="adToRoc">西元 → 民國</option>
-                <option value="rocToAd">民國 → 西元</option>
-              </select>
-            </div>
-            <div class="field">
-              <label for="dateConvertInput">輸入日期</label>
-              <input type="text" inputmode="numeric" id="dateConvertInput" placeholder="例：2026/07/28">
-            </div>
-          </div>
-          <div class="result orange" id="dateConvertResult">請輸入日期。<button class="copy" data-copy="dateConvertResult">複製</button></div>
-        </article>
-      </div>
-    </section>
-  </main>
-
-  <footer class="footer">工程計算工具箱｜手機、Windows 與 Mac 瀏覽器皆可使用</footer>
+<header class="header">
+<div class="brand">算</div>
+<div class="header-copy">
+<h1>工程計算工具箱</h1>
+<p>工程工作最常用的金額、坪數與日期計算｜所有計算只在瀏覽器內完成，不上傳、不保存</p>
 </div>
+<div class="header-actions">
+<span class="version">線上版 v3.3</span>
+<button class="btn danger" id="clearAllBtn">全部清除</button>
+</div>
+</header>
+<nav aria-label="工具分類" class="tabs">
+<button class="tab active" data-page="moneyPage">金額與比例</button>
+<button class="tab" data-page="unitPage">面積與單位</button>
+<button class="tab" data-page="datePage">日期與工期</button>
+</nav>
+<main>
+<section class="page active" id="moneyPage">
+<div class="section-heading">
+<h2>金額與比例</h2>
+<p>多家比價、稅金、中文大寫與成本分析｜常用項目排前面</p>
+</div>
+<div class="grid">
+<article class="card full">
+<div class="card-head">
+<span class="card-index">01</span>
+<div>
+<h3>多家報價比較</h3>
+<p class="card-note">可輸入 2～4 家報價。主要比較預設以最高報價為 10 折，也可改用預算／底價或指定廠商；下方會另外列出每一家彼此之間的交叉折數。</p>
+</div>
+</div>
+<div class="quote-entry-grid">
+<div class="quote-entry">
+<div class="field"><label for="quoteNameA">廠商 A</label><input id="quoteNameA" type="text" value="廠商 A" maxlength="30"/></div>
+<div class="field"><label for="quotePriceA">報價（元）</label><input id="quotePriceA" type="text" inputmode="decimal" placeholder="例：100000"/></div>
+</div>
+<div class="quote-entry">
+<div class="field"><label for="quoteNameB">廠商 B</label><input id="quoteNameB" type="text" value="廠商 B" maxlength="30"/></div>
+<div class="field"><label for="quotePriceB">報價（元）</label><input id="quotePriceB" type="text" inputmode="decimal" placeholder="例：92000"/></div>
+</div>
+<div class="quote-entry">
+<div class="field"><label for="quoteNameC">廠商 C</label><input id="quoteNameC" type="text" value="廠商 C" maxlength="30"/></div>
+<div class="field"><label for="quotePriceC">報價（元）</label><input id="quotePriceC" type="text" inputmode="decimal" placeholder="選填"/></div>
+</div>
+<div class="quote-entry">
+<div class="field"><label for="quoteNameD">廠商 D</label><input id="quoteNameD" type="text" value="廠商 D" maxlength="30"/></div>
+<div class="field"><label for="quotePriceD">報價（元）</label><input id="quotePriceD" type="text" inputmode="decimal" placeholder="選填"/></div>
+</div>
+</div>
+<div class="quote-options">
+<div class="field">
+<label for="quoteBudget">預算／底價（選填）</label>
+<input id="quoteBudget" type="text" inputmode="decimal" placeholder="有預算或底價時再填"/>
+</div>
+<div class="field">
+<label for="quoteBase">主要比較基準</label>
+<select id="quoteBase">
+<option value="highest">自動：最高報價（建議）</option>
+<option value="budget">預算／底價</option>
+<option value="A">廠商 A</option>
+<option value="B">廠商 B</option>
+<option value="C">廠商 C</option>
+<option value="D">廠商 D</option>
+</select>
+</div>
+</div>
+<div class="helper">折數算法＝比較報價 ÷ 基準報價 × 10。使用最高報價當基準時，其他廠商會呈現為 10 折以下；若已有預算、底價或原報價，改以該金額為基準會更有意義。</div>
+<div class="result neutral" id="quoteResult">請至少輸入 2 家報價。<button class="copy" data-copy="quoteResult">複製</button></div>
+</article>
 
+<article class="card full">
+<div class="card-head">
+<span class="card-index">02</span>
+<div>
+<h3>營業稅</h3>
+<p class="card-note">未稅轉含稅，或由含稅總額反推未稅與稅額。</p>
+</div>
+</div>
+<div class="fields">
+<div class="field"><label for="taxAmount">輸入金額（元）</label><input id="taxAmount" inputmode="decimal" placeholder="例：62000" type="text"/></div>
+<div class="field"><label for="taxMode">計算方向</label><select id="taxMode"><option value="exclusive">未稅 → 含稅</option><option value="inclusive">含稅 → 未稅</option></select></div>
+<div class="field"><label for="taxRate">稅率（%）</label><input id="taxRate" inputmode="decimal" min="0" step="0.1" type="number" value="5"/></div>
+</div>
+<label class="check-row"><input checked="" id="taxRound" type="checkbox"/>金額四捨五入至整數元</label>
+<div class="result" id="taxResult">請輸入金額。<button class="copy" data-copy="taxResult">複製</button></div>
+</article>
+
+<article class="card">
+<div class="card-head"><span class="card-index">03</span><div><h3>金額轉中文大寫</h3><p class="card-note">適合合約、簽呈及工程確認單金額。</p></div></div>
+<div class="field"><label for="chineseAmount">輸入金額（元）</label><input id="chineseAmount" inputmode="decimal" placeholder="例：1234567" type="text"/></div>
+<div class="result neutral" id="chineseResult">請輸入金額。<button class="copy" data-copy="chineseResult">複製</button></div>
+</article>
+
+<article class="card">
+<div class="card-head"><span class="card-index">04</span><div><h3>項目占總價比例</h3><p class="card-note">可算管理費、追加款、某工項占工程總價多少。</p></div></div>
+<div class="fields">
+<div class="field"><label for="totalAmount">總價（元）</label><input id="totalAmount" inputmode="decimal" placeholder="例：50000000" type="text"/></div>
+<div class="field"><label for="partAmount">項目金額（元）</label><input id="partAmount" inputmode="decimal" placeholder="例：2500000" type="text"/></div>
+</div>
+<div class="result" id="partResult">請輸入總價與項目金額。<button class="copy" data-copy="partResult">複製</button></div>
+</article>
+
+<article class="card full">
+<div class="card-head"><span class="card-index">05</span><div><h3>售價與成本分析</h3><p class="card-note">顯示價差、毛利率、成本占比及成本加價率。</p></div></div>
+<div class="fields">
+<div class="field"><label for="salePrice">售價（元）</label><input id="salePrice" inputmode="decimal" placeholder="例：100000" type="text"/></div>
+<div class="field"><label for="costPrice">成本（元）</label><input id="costPrice" inputmode="decimal" placeholder="例：75000" type="text"/></div>
+</div>
+<div class="result orange" id="profitResult">請輸入售價與成本。<button class="copy" data-copy="profitResult">複製</button></div>
+</article>
+</div>
+</section>
+<section class="page" id="unitPage">
+<div class="section-heading">
+<h2>面積與單位</h2>
+<p>坪數換算與面積單價｜暫不放才數計算</p>
+</div>
+<div class="grid">
+<article class="card full">
+<div class="card-head"><span class="card-index">01</span><div><h3>平方公尺／坪</h3><p class="card-note">1 坪＝3.305785 平方公尺。</p></div></div>
+<div class="fields">
+<div class="field"><label for="pingValue">輸入數值</label><input id="pingValue" inputmode="decimal" placeholder="例：100" type="number"/></div>
+<div class="field"><label for="pingMode">換算方向</label><select id="pingMode"><option value="sqmToPing">m² → 坪</option><option value="pingToSqm">坪 → m²</option></select></div>
+</div>
+<div class="result" id="pingResult">請輸入數值。<button class="copy" data-copy="pingResult">複製</button></div>
+</article>
+<article class="card full">
+<div class="card-head"><span class="card-index">02</span><div><h3>面積與每坪單價</h3><p class="card-note">輸入總金額及面積，自動顯示每坪與每平方公尺單價。</p></div></div>
+<div class="fields three">
+<div class="field"><label for="areaTotal">總金額（元）</label><input id="areaTotal" inputmode="decimal" placeholder="例：12000000" type="text"/></div>
+<div class="field"><label for="areaValue">面積</label><input id="areaValue" inputmode="decimal" placeholder="例：12685" type="number"/></div>
+<div class="field"><label for="areaUnit">輸入單位</label><select id="areaUnit"><option value="sqm">平方公尺（m²）</option><option value="ping">坪</option></select></div>
+</div>
+<div class="result neutral" id="areaResult">請輸入總金額與面積。<button class="copy" data-copy="areaResult">複製</button></div>
+</article>
+</div>
+</section>
+<section class="page" id="datePage">
+<div class="section-heading">
+<h2>日期與工期</h2>
+<p>民國西元、工期與日期加減｜常用項目排前面</p>
+</div>
+<div class="grid">
+
+
+
+<article class="card full">
+<div class="card-head">
+<span class="card-index">01</span>
+<div>
+<h3>民國／西元轉換</h3>
+<p class="card-note">民國日期可輸入 115/07/28、115-07-28 或 115.07.28。</p>
+</div>
+</div>
+<div class="fields">
+<div class="field">
+<label for="dateConvertMode">轉換方向</label>
+<select id="dateConvertMode">
+<option value="adToRoc">西元 → 民國</option>
+<option value="rocToAd">民國 → 西元</option>
+</select>
+</div>
+<div class="field">
+<label for="dateConvertInput">輸入日期</label>
+<input id="dateConvertInput" inputmode="numeric" placeholder="例：2026/07/28" type="text"/>
+</div>
+</div>
+<div class="result orange" id="dateConvertResult">請輸入日期。<button class="copy" data-copy="dateConvertResult">複製</button></div>
+</article><article class="card full">
+<div class="card-head">
+<span class="card-index">02</span>
+<div>
+<h3>工期起訖日與天數</h3>
+<p class="card-note">起訖日均計入；工作天僅扣除週六、週日，不含國定假日。</p>
+</div>
+</div>
+<div class="fields three">
+<div class="field">
+<label for="startDate">開始日期</label>
+<input id="startDate" type="date"/>
+</div>
+<div class="field">
+<label for="endDate">結束日期</label>
+<input id="endDate" type="date"/>
+</div>
+<div class="field">
+<label for="dayMode">主要顯示</label>
+<select id="dayMode">
+<option value="calendar">日曆天</option>
+<option value="working">工作天（扣週末）</option>
+</select>
+</div>
+</div>
+<div class="result" id="daysResult">請選擇開始與結束日期。<button class="copy" data-copy="daysResult">複製</button></div>
+</article><article class="card full">
+<div class="card-head">
+<span class="card-index">03</span>
+<div>
+<h3>日期加減</h3>
+<p class="card-note">可加減天、月、年，月底會自動調整。</p>
+</div>
+</div>
+<div class="fields">
+<div class="field">
+<label for="dateBase">基準日期</label>
+<input id="dateBase" type="date"/>
+</div>
+<div class="field">
+<label for="dateAmount">數量</label>
+<input id="dateAmount" inputmode="numeric" placeholder="例：45" step="1" type="number"/>
+</div>
+<div class="field">
+<label for="dateAction">運算</label>
+<select id="dateAction">
+<option value="add">加</option>
+<option value="subtract">減</option>
+</select>
+</div>
+<div class="field">
+<label for="dateUnit">單位</label>
+<select id="dateUnit">
+<option value="day">天</option>
+<option value="month">個月</option>
+<option value="year">年</option>
+</select>
+</div>
+</div>
+<div class="result neutral" id="dateResult">請選擇日期並輸入數量。<button class="copy" data-copy="dateResult">複製</button></div>
+</article></div>
+</section>
+</main>
+<footer class="footer">工程計算工具箱｜GitHub Pages 線上版 v3.3｜手機、Windows 與 Mac 皆可使用</footer>
+</div>
 <div class="toast" id="toast">已複製</div>
-
 <script>
 "use strict";
 
 const PING_SQM = 3.305785;
-const CAI_PER_SQM = 10.89;
 const byId = id => document.getElementById(id);
 
 function parseNumber(value){
@@ -805,42 +727,99 @@ async function copyText(text){
   showToast("已複製");
 }
 
-function calcRatio(){
-  const base=num("ratioBase");
-  const compare=num("ratioCompare");
-  if(base===null || compare===null){
-    byId("ratioCheng").textContent="— 成";
-    byId("ratioPercent").textContent="—%";
-    byId("ratioDiscount").textContent="— 折";
-    byId("ratioDifference").textContent="—";
-    byId("ratioSentence").textContent="請輸入兩個價格";
-    byId("ratioFormula").textContent="算法：比較價格 ÷ 基準價格 × 10 ＝ 幾成。例：80,000 ÷ 100,000 × 10 ＝ 8 成。";
-    return;
-  }
-  if(base===0){
-    byId("ratioCheng").textContent="無法計算";
-    byId("ratioPercent").textContent="—";
-    byId("ratioDiscount").textContent="—";
-    byId("ratioDifference").textContent=formatMoney(compare);
-    byId("ratioSentence").textContent="基準價格不可為 0";
-    return;
-  }
-  const ratio=compare/base;
-  const percent=ratio*100;
-  const cheng=ratio*10;
-  const diff=compare-base;
-  const differenceRate=Math.abs(diff)/Math.abs(base)*100;
-  const relation=diff===0
-    ? "兩個價格相同"
-    : `比較價格較基準價格${diff<0?"低":"高"} ${differenceRate.toFixed(2)}%`;
+function escapeHtml(value){
+  return String(value ?? "").replace(/[&<>"]/g,char=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[char]));
+}
 
-  byId("ratioCheng").textContent=`${formatNumber(cheng,3)} 成`;
-  byId("ratioPercent").textContent=`${formatNumber(percent,2)}%`;
-  byId("ratioDiscount").textContent=`${formatNumber(cheng,3)} 折`;
-  byId("ratioDifference").textContent=`${diff>0?"+":""}${formatMoney(diff)}`;
-  byId("ratioSentence").textContent=relation;
-  byId("ratioFormula").textContent=
-    `${formatNumber(compare)} ÷ ${formatNumber(base)} × 10 ＝ ${formatNumber(cheng,3)} 成；也就是 ${formatNumber(percent,2)}%。`;
+function calcQuotes(){
+  const keys=["A","B","C","D"];
+  const quotes=keys.map(key=>({
+    key,
+    name:(byId(`quoteName${key}`).value.trim()||`廠商 ${key}`),
+    price:num(`quotePrice${key}`)
+  })).filter(item=>item.price!==null);
+
+  if(quotes.some(item=>item.price<=0)){
+    setResult("quoteResult","報價必須大於 0。","error");
+    return;
+  }
+  if(quotes.length<2){
+    setResult("quoteResult","請至少輸入 2 家報價。");
+    return;
+  }
+
+  const sorted=[...quotes].sort((a,b)=>a.price-b.price || a.key.localeCompare(b.key));
+  const lowest=sorted[0];
+  const highest=sorted[sorted.length-1];
+  const budget=num("quoteBudget");
+  const baseMode=byId("quoteBase").value;
+  let basePrice,baseLabel;
+
+  if(baseMode==="highest"){
+    basePrice=highest.price;
+    baseLabel=`${highest.name}（最高報價）`;
+  }else if(baseMode==="budget"){
+    if(budget===null||budget<=0){
+      setResult("quoteResult","已選擇「預算／底價」為基準，請先輸入有效金額。","error");
+      return;
+    }
+    basePrice=budget;
+    baseLabel="預算／底價";
+  }else{
+    const selected=quotes.find(item=>item.key===baseMode);
+    if(!selected){
+      setResult("quoteResult",`已選擇廠商 ${baseMode} 為基準，請先輸入該廠商報價。`,"error");
+      return;
+    }
+    basePrice=selected.price;
+    baseLabel=selected.name;
+  }
+
+  const uniquePrices=[...new Set(sorted.map(item=>item.price))];
+  const rankOf=price=>uniquePrices.indexOf(price)+1;
+  const highLowDiff=highest.price-lowest.price;
+  const highLowRate=lowest.price===0?0:highLowDiff/lowest.price*100;
+
+  const summary=table([
+    ["主要比較基準",`${escapeHtml(baseLabel)}｜${formatMoney(basePrice)}`],
+    ["最低報價",`<b>${escapeHtml(lowest.name)}｜${formatMoney(lowest.price)}</b>`],
+    ["最高報價",`${escapeHtml(highest.name)}｜${formatMoney(highest.price)}`],
+    ["最高與最低價差",`${formatMoney(highLowDiff)}（最高價較最低價高 ${formatNumber(highLowRate,2)}%）`]
+  ]);
+
+  const rows=sorted.map(item=>{
+    const discount=item.price/basePrice*10;
+    const diff=item.price-lowest.price;
+    const diffRate=diff/lowest.price*100;
+    const badge=item.price===lowest.price?'<span class="quote-badge">最低</span>':item.price===highest.price?'<span class="quote-badge">最高</span>':'';
+    return `<tr>
+      <td>${rankOf(item.price)}</td>
+      <td>${escapeHtml(item.name)}${badge}</td>
+      <td>${formatMoney(item.price)}</td>
+      <td><b>${formatNumber(discount,3)} 折</b></td>
+      <td>${diff===0?"—":`${formatMoney(diff)}（+${formatNumber(diffRate,2)}%）`}</td>
+    </tr>`;
+  }).join("");
+
+  const ranking=`<div class="compare-title">依主要基準比較</div>
+    <div class="compare-table-wrap"><table class="compare-table">
+      <thead><tr><th>排名</th><th>廠商</th><th>報價</th><th>基準折數</th><th>與最低價差</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table></div>`;
+
+  const matrixHead=quotes.map(item=>`<th>${escapeHtml(item.name)}<br><small>基準</small></th>`).join("");
+  const matrixRows=quotes.map(row=>{
+    const cells=quotes.map(col=>`<td>${formatNumber(row.price/col.price*10,3)} 折</td>`).join("");
+    return `<tr><th>${escapeHtml(row.name)}<br><small>比較價</small></th>${cells}</tr>`;
+  }).join("");
+  const matrix=`<div class="compare-title">交叉折數表</div>
+    <div class="helper">讀法：左側那一家「是」上方那一家的幾折。例如查看「廠商 A」那一列與「廠商 B」那一欄，即為 A 是 B 的幾折。</div>
+    <div class="compare-table-wrap"><table class="compare-table compact">
+      <thead><tr><th>比較價 ↓／基準價 →</th>${matrixHead}</tr></thead>
+      <tbody>${matrixRows}</tbody>
+    </table></div>`;
+
+  setResult("quoteResult",summary+ranking+matrix);
 }
 
 function calcTax(){
@@ -985,45 +964,6 @@ function calcPing(){
     ]));
   }
 }
-function calcCai(){
-  const value=num("caiValue");
-  const mode=byId("caiMode").value;
-  if(value===null){setResult("caiResult","請輸入數值。");return}
-  if(mode==="sqmToCai"){
-    setResult("caiResult",table([
-      ["平方公尺",`${formatNumber(value,4)} m²`],
-      ["換算才數",`<b>${formatNumber(value*CAI_PER_SQM,4)} 才</b>`]
-    ]));
-  }else{
-    setResult("caiResult",table([
-      ["才數",`${formatNumber(value,4)} 才`],
-      ["換算平方公尺",`<b>${formatNumber(value/CAI_PER_SQM,4)} m²</b>`]
-    ]));
-  }
-}
-function calcSize(){
-  const w=num("sizeW");
-  const h=num("sizeH");
-  const qty=num("sizeQty");
-  const price=num("sizePrice");
-  if(w===null||h===null){setResult("sizeResult","請輸入寬度與高度。");return}
-  if(w<=0||h<=0||qty===null||qty<0){setResult("sizeResult","寬、高須大於 0，數量不可為負數。","error");return}
-  const single=(w/1000)*(h/1000)*CAI_PER_SQM;
-  const total=single*qty;
-  const rows=[
-    ["單件才數",`${formatNumber(single,4)} 才`],
-    ["總才數",`<b>${formatNumber(total,4)} 才</b>`],
-    ["總才數無條件捨去",`${Math.floor(total).toLocaleString("zh-TW")} 才`],
-    ["總才數無條件進位",`${Math.ceil(total).toLocaleString("zh-TW")} 才`]
-  ];
-  if(price!==null){
-    rows.push(["單件報價",formatMoney(price)]);
-    rows.push(["每才單價",single===0?"—":formatMoney(price/single)]);
-    rows.push(["總報價",formatMoney(price*qty)]);
-  }
-  setResult("sizeResult",table(rows));
-}
-
 function parseDateUTC(value){
   const m=String(value||"").match(/^(\d{4})-(\d{2})-(\d{2})$/);
   if(!m)return null;
@@ -1127,15 +1067,17 @@ function calcDateConvert(){
 }
 
 const calculators={
-  ratioBase:calcRatio,ratioCompare:calcRatio,
+  quoteNameA:calcQuotes,quotePriceA:calcQuotes,
+  quoteNameB:calcQuotes,quotePriceB:calcQuotes,
+  quoteNameC:calcQuotes,quotePriceC:calcQuotes,
+  quoteNameD:calcQuotes,quotePriceD:calcQuotes,
+  quoteBudget:calcQuotes,quoteBase:calcQuotes,
   taxAmount:calcTax,taxMode:calcTax,taxRate:calcTax,taxRound:calcTax,
   chineseAmount:calcChinese,
   salePrice:calcProfit,costPrice:calcProfit,
   totalAmount:calcPart,partAmount:calcPart,
   areaTotal:calcArea,areaValue:calcArea,areaUnit:calcArea,
   pingValue:calcPing,pingMode:calcPing,
-  caiValue:calcCai,caiMode:calcCai,
-  sizeW:calcSize,sizeH:calcSize,sizeQty:calcSize,sizePrice:calcSize,
   startDate:calcDays,endDate:calcDays,dayMode:calcDays,
   dateBase:calcDate,dateAmount:calcDate,dateAction:calcDate,dateUnit:calcDate,
   dateConvertMode:calcDateConvert,dateConvertInput:calcDateConvert
@@ -1147,12 +1089,6 @@ Object.entries(calculators).forEach(([id,fn])=>{
   element.addEventListener("change",fn);
 });
 
-byId("swapRatioBtn").addEventListener("click",()=>{
-  const base=byId("ratioBase").value;
-  byId("ratioBase").value=byId("ratioCompare").value;
-  byId("ratioCompare").value=base;
-  calcRatio();
-});
 
 document.addEventListener("click",event=>{
   const copyBtn=event.target.closest("[data-copy]");
@@ -1175,12 +1111,12 @@ byId("clearAllBtn").addEventListener("click",()=>{
   document.querySelectorAll("input").forEach(input=>{
     if(input.type==="checkbox")input.checked=input.id==="taxRound";
     else if(input.id==="taxRate")input.value="5";
-    else if(input.id==="sizeQty")input.value="1";
     else input.value="";
   });
   document.querySelectorAll("select").forEach(select=>select.selectedIndex=0);
+  ["A","B","C","D"].forEach(key=>byId(`quoteName${key}`).value=`廠商 ${key}`);
   Object.values(calculators).forEach(fn=>fn());
-  calcRatio();
+  calcQuotes();
   showToast("全部輸入已清除");
 });
 
@@ -1190,15 +1126,13 @@ try{
   if(tab)tab.click();
 }catch(_){}
 
-calcRatio();
+calcQuotes();
 calcTax();
 calcChinese();
 calcProfit();
 calcPart();
 calcArea();
 calcPing();
-calcCai();
-calcSize();
 calcDays();
 calcDate();
 calcDateConvert();
