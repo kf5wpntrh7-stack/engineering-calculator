@@ -597,7 +597,7 @@ input:focus,select:focus{
 
 
 
-/* v4.3 清晰介面版：強化資訊層級與手機操作 */
+/* v4.4 文字鍵盤版：強化資訊層級與手機操作 */
 :root{
   --bg:#eef2f4;
   --surface:#ffffff;
@@ -754,7 +754,7 @@ input::placeholder{color:#a0aab0}
       <p>依你的工作情境整理：比價、稅金、追加減、標單與工期｜資料只在瀏覽器內計算</p>
     </div>
     <div class="header-actions">
-      <span class="version">清晰介面版 v4.3</span>
+      <span class="version">文字鍵盤版 v4.4</span>
       <button class="btn danger" id="clearAllBtn">全部清除</button>
     </div>
   </header>
@@ -808,13 +808,13 @@ input::placeholder{color:#a0aab0}
             <p class="card-note">輸入 2～4 家報價，查看排名、與最低價差、基準折數及各家交叉折數。</p>
           </div></div>
           <div class="quote-entry-grid">
-            <div class="quote-entry"><div class="field"><label for="quoteNameA">廠商 A</label><input id="quoteNameA" type="text" value="廠商 A" maxlength="30"></div><div class="field"><label for="quotePriceA">報價（元）</label><input id="quotePriceA" type="text" inputmode="decimal" placeholder="例：100000"></div></div>
-            <div class="quote-entry"><div class="field"><label for="quoteNameB">廠商 B</label><input id="quoteNameB" type="text" value="廠商 B" maxlength="30"></div><div class="field"><label for="quotePriceB">報價（元）</label><input id="quotePriceB" type="text" inputmode="decimal" placeholder="例：92000"></div></div>
-            <div class="quote-entry"><div class="field"><label for="quoteNameC">廠商 C</label><input id="quoteNameC" type="text" value="廠商 C" maxlength="30"></div><div class="field"><label for="quotePriceC">報價（元）</label><input id="quotePriceC" type="text" inputmode="decimal" placeholder="選填"></div></div>
-            <div class="quote-entry"><div class="field"><label for="quoteNameD">廠商 D</label><input id="quoteNameD" type="text" value="廠商 D" maxlength="30"></div><div class="field"><label for="quotePriceD">報價（元）</label><input id="quotePriceD" type="text" inputmode="decimal" placeholder="選填"></div></div>
+            <div class="quote-entry"><div class="field"><label for="quoteNameA">廠商 A</label><input id="quoteNameA" type="text" value="廠商 A" maxlength="30"></div><div class="field"><label for="quotePriceA">報價（元）</label><input id="quotePriceA" type="text" placeholder="例：100000"></div></div>
+            <div class="quote-entry"><div class="field"><label for="quoteNameB">廠商 B</label><input id="quoteNameB" type="text" value="廠商 B" maxlength="30"></div><div class="field"><label for="quotePriceB">報價（元）</label><input id="quotePriceB" type="text" placeholder="例：92000"></div></div>
+            <div class="quote-entry"><div class="field"><label for="quoteNameC">廠商 C</label><input id="quoteNameC" type="text" value="廠商 C" maxlength="30"></div><div class="field"><label for="quotePriceC">報價（元）</label><input id="quotePriceC" type="text" placeholder="選填"></div></div>
+            <div class="quote-entry"><div class="field"><label for="quoteNameD">廠商 D</label><input id="quoteNameD" type="text" value="廠商 D" maxlength="30"></div><div class="field"><label for="quotePriceD">報價（元）</label><input id="quotePriceD" type="text" placeholder="選填"></div></div>
           </div>
           <div class="quote-options">
-            <div class="field"><label for="quoteBudget">預算／底價／原報價（選填）</label><input id="quoteBudget" type="text" inputmode="decimal" placeholder="有基準金額時再填"></div>
+            <div class="field"><label for="quoteBudget">預算／底價／原報價（選填）</label><input id="quoteBudget" type="text" placeholder="有基準金額時再填"></div>
             <div class="field"><label for="quoteBase">主要比較基準</label><select id="quoteBase"><option value="highest">自動：最高報價（建議）</option><option value="budget">預算／底價／原報價</option><option value="A">廠商 A</option><option value="B">廠商 B</option><option value="C">廠商 C</option><option value="D">廠商 D</option></select></div>
           </div>
           <div class="helper">沒有底價時，以最高報價作為 10 折最直覺；已有預算、底價或原報價時，改用該金額作為基準。</div>
@@ -827,14 +827,14 @@ input::placeholder{color:#a0aab0}
             <p class="card-note">工程款、監管費及其他費用可分筆輸入，再一次計算未稅、稅額與含稅總額。</p>
           </div></div>
           <div class="input-table-wrap"><table class="input-table"><thead><tr><th>#</th><th>項目名稱</th><th>金額（元）</th></tr></thead><tbody>
-            <tr><td class="row-number">1</td><td><input class="name-input" id="taxName1" type="text" value="工程款"></td><td><input id="taxItem1" type="text" inputmode="decimal" placeholder="例：4584471"></td></tr>
-            <tr><td class="row-number">2</td><td><input class="name-input" id="taxName2" type="text" value="監管費"></td><td><input id="taxItem2" type="text" inputmode="decimal" placeholder="例：366758"></td></tr>
-            <tr><td class="row-number">3</td><td><input class="name-input" id="taxName3" type="text" value="其他費用 1"></td><td><input id="taxItem3" type="text" inputmode="decimal" placeholder="選填"></td></tr>
-            <tr><td class="row-number">4</td><td><input class="name-input" id="taxName4" type="text" value="其他費用 2"></td><td><input id="taxItem4" type="text" inputmode="decimal" placeholder="選填"></td></tr>
+            <tr><td class="row-number">1</td><td><input class="name-input" id="taxName1" type="text" value="工程款"></td><td><input id="taxItem1" type="text" placeholder="例：4584471"></td></tr>
+            <tr><td class="row-number">2</td><td><input class="name-input" id="taxName2" type="text" value="監管費"></td><td><input id="taxItem2" type="text" placeholder="例：366758"></td></tr>
+            <tr><td class="row-number">3</td><td><input class="name-input" id="taxName3" type="text" value="其他費用 1"></td><td><input id="taxItem3" type="text" placeholder="選填"></td></tr>
+            <tr><td class="row-number">4</td><td><input class="name-input" id="taxName4" type="text" value="其他費用 2"></td><td><input id="taxItem4" type="text" placeholder="選填"></td></tr>
           </tbody></table></div>
           <div class="option-grid">
             <div class="field"><label for="taxMode">輸入金額性質</label><select id="taxMode"><option value="exclusive">全部為未稅金額</option><option value="inclusive">全部為含稅金額</option></select></div>
-            <div class="field"><label for="taxRate">稅率（%）</label><input id="taxRate" type="number" inputmode="decimal" value="5" min="0" step="0.1"></div>
+            <div class="field"><label for="taxRate">稅率（%）</label><input id="taxRate" type="text" value="5"></div>
             <label class="check-row"><input id="taxRound" type="checkbox" checked>結果四捨五入至整數元</label>
           </div>
           <div class="result" id="taxResult">請至少輸入一筆金額。<button class="copy" data-copy="taxResult">複製</button></div>
@@ -846,12 +846,12 @@ input::placeholder{color:#a0aab0}
             <p class="card-note">可處理「原合約含稅，但追加、追減為未稅」等不同金額基準，自動換算變更後合約總額。</p>
           </div></div>
           <div class="fields three">
-            <div class="field"><label for="changeOriginal">原合約金額（元）</label><input id="changeOriginal" type="text" inputmode="decimal" placeholder="例：87000000"></div>
+            <div class="field"><label for="changeOriginal">原合約金額（元）</label><input id="changeOriginal" type="text" placeholder="例：87000000"></div>
             <div class="field"><label for="changeOriginalMode">原合約金額</label><select id="changeOriginalMode"><option value="inclusive">含稅</option><option value="exclusive">未稅</option></select></div>
-            <div class="field"><label for="changeRate">稅率（%）</label><input id="changeRate" type="number" inputmode="decimal" value="5" min="0" step="0.1"></div>
-            <div class="field"><label for="changeAdd">追加金額（元）</label><input id="changeAdd" type="text" inputmode="decimal" placeholder="例：4584471"></div>
-            <div class="field"><label for="changeDeduct">追減金額（元）</label><input id="changeDeduct" type="text" inputmode="decimal" placeholder="例：181640"></div>
-            <div class="field"><label for="changeSupervision">監管費／其他追加（元）</label><input id="changeSupervision" type="text" inputmode="decimal" placeholder="例：366758"></div>
+            <div class="field"><label for="changeRate">稅率（%）</label><input id="changeRate" type="text" value="5"></div>
+            <div class="field"><label for="changeAdd">追加金額（元）</label><input id="changeAdd" type="text" placeholder="例：4584471"></div>
+            <div class="field"><label for="changeDeduct">追減金額（元）</label><input id="changeDeduct" type="text" placeholder="例：181640"></div>
+            <div class="field"><label for="changeSupervision">監管費／其他追加（元）</label><input id="changeSupervision" type="text" placeholder="例：366758"></div>
             <div class="field"><label for="changeItemsMode">追加、追減及監管費</label><select id="changeItemsMode"><option value="exclusive">未稅</option><option value="inclusive">含稅</option></select></div>
           </div>
           <label class="check-row"><input id="changeRound" type="checkbox" checked>結果四捨五入至整數元</label>
@@ -861,8 +861,8 @@ input::placeholder{color:#a0aab0}
         <article class="card" id="tool-negotiation">
           <div class="card-head"><span class="card-index">04</span><div><h3>議價折數與節省金額</h3><p class="card-note">專門比較原報價與議價後金額。</p></div></div>
           <div class="fields">
-            <div class="field"><label for="negOriginal">原報價（元）</label><input id="negOriginal" type="text" inputmode="decimal" placeholder="例：1000000"></div>
-            <div class="field"><label for="negFinal">議價後金額（元）</label><input id="negFinal" type="text" inputmode="decimal" placeholder="例：870000"></div>
+            <div class="field"><label for="negOriginal">原報價（元）</label><input id="negOriginal" type="text" placeholder="例：1000000"></div>
+            <div class="field"><label for="negFinal">議價後金額（元）</label><input id="negFinal" type="text" placeholder="例：870000"></div>
           </div>
           <div class="result orange" id="negResult">請輸入原報價與議價後金額。<button class="copy" data-copy="negResult">複製</button></div>
         </article>
@@ -871,9 +871,9 @@ input::placeholder{color:#a0aab0}
           <div class="card-head"><span class="card-index">05</span><div><h3>履保／保留款／項目占比</h3><p class="card-note">可由項目金額反算比例，也可由比例算出應扣或應提列金額。</p></div></div>
           <div class="field"><label for="ratioMode">計算方式</label><select id="ratioMode"><option value="partToPercent">已知項目金額 → 算比例</option><option value="percentToPart">已知比例 → 算金額</option></select></div>
           <div class="fields" style="margin-top:10px">
-            <div class="field"><label for="ratioTotal">總價／合約金額（元）</label><input id="ratioTotal" type="text" inputmode="decimal" placeholder="例：87000000"></div>
-            <div class="field"><label for="ratioPart">項目金額（元）</label><input id="ratioPart" type="text" inputmode="decimal" placeholder="例：2610000"></div>
-            <div class="field"><label for="ratioPercentInput">比例（%）</label><input id="ratioPercentInput" type="number" inputmode="decimal" step="0.01" placeholder="例：3"></div>
+            <div class="field"><label for="ratioTotal">總價／合約金額（元）</label><input id="ratioTotal" type="text" placeholder="例：87000000"></div>
+            <div class="field"><label for="ratioPart">項目金額（元）</label><input id="ratioPart" type="text" placeholder="例：2610000"></div>
+            <div class="field"><label for="ratioPercentInput">比例（%）</label><input id="ratioPercentInput" type="text" placeholder="例：3"></div>
           </div>
           <div class="quick-buttons"><button class="btn soft ratio-quick" data-percent="3">3%</button><button class="btn soft ratio-quick" data-percent="5">5%</button><button class="btn soft ratio-quick" data-percent="10">10%</button></div>
           <div class="result" id="ratioResult">請輸入總價與項目金額。<button class="copy" data-copy="ratioResult">複製</button></div>
@@ -881,7 +881,7 @@ input::placeholder{color:#a0aab0}
 
         <article class="card full" id="tool-chinese">
           <div class="card-head"><span class="card-index">06</span><div><h3>金額轉中文大寫</h3><p class="card-note">適合合約、簽呈、工程確認單及履保票金額。</p></div></div>
-          <div class="field"><label for="chineseAmount">輸入金額（元）</label><input id="chineseAmount" type="text" inputmode="decimal" placeholder="例：87000000"></div>
+          <div class="field"><label for="chineseAmount">輸入金額（元）</label><input id="chineseAmount" type="text" placeholder="例：87000000"></div>
           <div class="result neutral" id="chineseResult">請輸入金額。<button class="copy" data-copy="chineseResult">複製</button></div>
         </article>
       </div>
@@ -893,9 +893,9 @@ input::placeholder{color:#a0aab0}
         <article class="card full" id="tool-area">
           <div class="card-head"><span class="card-index">01</span><div><h3>平方公尺／坪與面積單價</h3><p class="card-note">只輸入面積即可換算；再輸入總金額，會同步顯示每坪與每平方公尺單價。</p></div></div>
           <div class="fields three">
-            <div class="field"><label for="areaValue">面積</label><input id="areaValue" type="number" inputmode="decimal" placeholder="例：46.24"></div>
+            <div class="field"><label for="areaValue">面積</label><input id="areaValue" type="text" placeholder="例：46.24"></div>
             <div class="field"><label for="areaUnit">輸入單位</label><select id="areaUnit"><option value="sqm">平方公尺（m²）</option><option value="ping">坪</option></select></div>
-            <div class="field"><label for="areaTotal">總金額（元，選填）</label><input id="areaTotal" type="text" inputmode="decimal" placeholder="例：12000000"></div>
+            <div class="field"><label for="areaTotal">總金額（元，選填）</label><input id="areaTotal" type="text" placeholder="例：12000000"></div>
           </div>
           <div class="result neutral" id="areaResult">請輸入面積。<button class="copy" data-copy="areaResult">複製</button></div>
         </article>
@@ -903,11 +903,11 @@ input::placeholder{color:#a0aab0}
         <article class="card full" id="tool-boq">
           <div class="card-head"><span class="card-index">02</span><div><h3>數量 × 單價／追加減複價</h3><p class="card-note">輸入原數量、變更數量與單價，快速核對原複價、變更後複價及追加／追減金額。</p></div></div>
           <div class="input-table-wrap"><table class="input-table"><thead><tr><th>#</th><th>項目名稱</th><th>原數量</th><th>變更數量</th><th>單價（元）</th></tr></thead><tbody>
-            <tr><td class="row-number">1</td><td><input class="name-input" id="boqName1" type="text" value="項目 1"></td><td><input id="boqOld1" type="number" inputmode="decimal" placeholder="0"></td><td><input id="boqNew1" type="number" inputmode="decimal" placeholder="0"></td><td><input id="boqPrice1" type="text" inputmode="decimal" placeholder="單價"></td></tr>
-            <tr><td class="row-number">2</td><td><input class="name-input" id="boqName2" type="text" value="項目 2"></td><td><input id="boqOld2" type="number" inputmode="decimal" placeholder="0"></td><td><input id="boqNew2" type="number" inputmode="decimal" placeholder="0"></td><td><input id="boqPrice2" type="text" inputmode="decimal" placeholder="單價"></td></tr>
-            <tr><td class="row-number">3</td><td><input class="name-input" id="boqName3" type="text" value="項目 3"></td><td><input id="boqOld3" type="number" inputmode="decimal" placeholder="0"></td><td><input id="boqNew3" type="number" inputmode="decimal" placeholder="0"></td><td><input id="boqPrice3" type="text" inputmode="decimal" placeholder="單價"></td></tr>
-            <tr><td class="row-number">4</td><td><input class="name-input" id="boqName4" type="text" value="項目 4"></td><td><input id="boqOld4" type="number" inputmode="decimal" placeholder="0"></td><td><input id="boqNew4" type="number" inputmode="decimal" placeholder="0"></td><td><input id="boqPrice4" type="text" inputmode="decimal" placeholder="單價"></td></tr>
-            <tr><td class="row-number">5</td><td><input class="name-input" id="boqName5" type="text" value="項目 5"></td><td><input id="boqOld5" type="number" inputmode="decimal" placeholder="0"></td><td><input id="boqNew5" type="number" inputmode="decimal" placeholder="0"></td><td><input id="boqPrice5" type="text" inputmode="decimal" placeholder="單價"></td></tr>
+            <tr><td class="row-number">1</td><td><input class="name-input" id="boqName1" type="text" value="項目 1"></td><td><input id="boqOld1" type="text" placeholder="0"></td><td><input id="boqNew1" type="text" placeholder="0"></td><td><input id="boqPrice1" type="text" placeholder="單價"></td></tr>
+            <tr><td class="row-number">2</td><td><input class="name-input" id="boqName2" type="text" value="項目 2"></td><td><input id="boqOld2" type="text" placeholder="0"></td><td><input id="boqNew2" type="text" placeholder="0"></td><td><input id="boqPrice2" type="text" placeholder="單價"></td></tr>
+            <tr><td class="row-number">3</td><td><input class="name-input" id="boqName3" type="text" value="項目 3"></td><td><input id="boqOld3" type="text" placeholder="0"></td><td><input id="boqNew3" type="text" placeholder="0"></td><td><input id="boqPrice3" type="text" placeholder="單價"></td></tr>
+            <tr><td class="row-number">4</td><td><input class="name-input" id="boqName4" type="text" value="項目 4"></td><td><input id="boqOld4" type="text" placeholder="0"></td><td><input id="boqNew4" type="text" placeholder="0"></td><td><input id="boqPrice4" type="text" placeholder="單價"></td></tr>
+            <tr><td class="row-number">5</td><td><input class="name-input" id="boqName5" type="text" value="項目 5"></td><td><input id="boqOld5" type="text" placeholder="0"></td><td><input id="boqNew5" type="text" placeholder="0"></td><td><input id="boqPrice5" type="text" placeholder="單價"></td></tr>
           </tbody></table></div>
           <div class="helper">只想算「數量 × 單價」時，可把原數量留空，只填變更數量與單價。</div>
           <div class="result" id="boqResult">請至少輸入一筆數量與單價。<button class="copy" data-copy="boqResult">複製</button></div>
@@ -932,7 +932,7 @@ input::placeholder{color:#a0aab0}
           <div class="card-head"><span class="card-index">02</span><div><h3>開始日＋工期＝完工日</h3><p class="card-note">可選日曆天或工作天，並決定開始日是否算第 1 天。</p></div></div>
           <div class="fields three">
             <div class="field"><label for="finishStart">開始日期</label><input id="finishStart" type="date"></div>
-            <div class="field"><label for="finishDuration">工期天數</label><input id="finishDuration" type="number" inputmode="numeric" min="1" step="1" placeholder="例：45"></div>
+            <div class="field"><label for="finishDuration">工期天數</label><input id="finishDuration" type="text" placeholder="例：45"></div>
             <div class="field"><label for="finishMode">工期種類</label><select id="finishMode"><option value="calendar">日曆天</option><option value="working">工作天（扣週末）</option></select></div>
           </div>
           <label class="check-row"><input id="finishIncludeStart" type="checkbox" checked>開始日算第 1 天</label>
@@ -943,7 +943,7 @@ input::placeholder{color:#a0aab0}
           <div class="card-head"><span class="card-index">03</span><div><h3>日期加減</h3><p class="card-note">可加減天、月、年，月底會自動調整。</p></div></div>
           <div class="fields">
             <div class="field"><label for="dateBase">基準日期</label><input id="dateBase" type="date"></div>
-            <div class="field"><label for="dateAmount">數量</label><input id="dateAmount" type="number" inputmode="numeric" step="1" placeholder="例：45"></div>
+            <div class="field"><label for="dateAmount">數量</label><input id="dateAmount" type="text" placeholder="例：45"></div>
             <div class="field"><label for="dateAction">運算</label><select id="dateAction"><option value="add">加</option><option value="subtract">減</option></select></div>
             <div class="field"><label for="dateUnit">單位</label><select id="dateUnit"><option value="day">天</option><option value="month">個月</option><option value="year">年</option></select></div>
           </div>
@@ -954,7 +954,7 @@ input::placeholder{color:#a0aab0}
           <div class="card-head"><span class="card-index">04</span><div><h3>民國／西元轉換</h3><p class="card-note">民國日期可輸入 115/07/28、115-07-28 或 115.07.28。</p></div></div>
           <div class="fields">
             <div class="field"><label for="dateConvertMode">轉換方向</label><select id="dateConvertMode"><option value="adToRoc">西元 → 民國</option><option value="rocToAd">民國 → 西元</option></select></div>
-            <div class="field"><label for="dateConvertInput">輸入日期</label><input id="dateConvertInput" type="text" inputmode="numeric" placeholder="例：2026/07/28"></div>
+            <div class="field"><label for="dateConvertInput">輸入日期</label><input id="dateConvertInput" type="text" placeholder="例：2026/07/28"></div>
           </div>
           <div class="result orange" id="dateConvertResult">請輸入日期。<button class="copy" data-copy="dateConvertResult">複製</button></div>
         </article>
@@ -962,7 +962,7 @@ input::placeholder{color:#a0aab0}
     </section>
   </main>
 
-  <footer class="footer">工程計算工具箱｜GitHub Pages 清晰介面版 v4.3｜手機、Windows 與 Mac 皆可使用</footer>
+  <footer class="footer">工程計算工具箱｜GitHub Pages 文字鍵盤版 v4.4｜手機、Windows 與 Mac 皆可使用</footer>
 </div>
 <button type="button" class="back-tools" id="backToTools" aria-label="回到快速工具選單">↑ 工具選單</button>
 <div class="toast" id="toast">已複製</div>
