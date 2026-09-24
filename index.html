@@ -851,6 +851,7 @@ input::placeholder{color:#a0aab0}
             <div class="field"><label for="changeRate">稅率（%）</label><input id="changeRate" type="text" value="5"></div>
             <div class="field"><label for="changeAdd">追加金額（元）</label><input id="changeAdd" type="text" placeholder="例：4584471"></div>
             <div class="field"><label for="changeDeduct">追減金額（元）</label><input id="changeDeduct" type="text" placeholder="例：181640"></div>
+<div class="field"><label for="changeDeductFactor">追減計價比例</label><select id="changeDeductFactor"><option value="1">100%（直接追減）</option><option value="0.8">80%（依合約退費）</option></select></div>
             <div class="field"><label for="changeSupervision">監管費／其他追加（元）</label><input id="changeSupervision" type="text" placeholder="例：366758"></div>
             <div class="field"><label for="changeItemsMode">追加、追減及監管費</label><select id="changeItemsMode"><option value="exclusive">未稅</option><option value="inclusive">含稅</option></select></div>
           </div>
@@ -1070,7 +1071,9 @@ function calcChange(){
   const r=rateValue/100;
   const originalEx=normalizeAmount(original,byId("changeOriginalMode").value,r);
   const itemMode=byId("changeItemsMode").value;
-  const addEx=normalizeAmount(add,itemMode,r),deductEx=normalizeAmount(deduct,itemMode,r),superEx=normalizeAmount(supervision,itemMode,r);
+  const addEx=normalizeAmount(add,itemMode,r),deductBaseEx=normalizeAmount(deduct,itemMode,r),superEx=normalizeAmount(supervision,itemMode,r);
+  const deductFactor=Number(byId("changeDeductFactor").value);
+  const deductEx=deductBaseEx*deductFactor;
   const netEx=addEx+superEx-deductEx;
   const changedEx=originalEx+netEx;
   const originalIn=originalEx*(1+r),netIn=netEx*(1+r),changedIn=changedEx*(1+r);
@@ -1080,7 +1083,8 @@ function calcChange(){
     ["原合約未稅",formatMoney(rounded(originalEx,round),d)],
     ["原合約含稅",formatMoney(rounded(originalIn,round),d)],
     ["追加未稅",formatMoney(rounded(addEx,round),d)],
-    ["追減未稅",`－${formatMoney(rounded(deductEx,round),d)}`],
+    ["追減計價比例",`${formatNumber(deductFactor*100)}%`],
+    ["計價後追減未稅",`－${formatMoney(rounded(deductEx,round),d)}`],
     ["監管費／其他追加未稅",formatMoney(rounded(superEx,round),d)],
     ["追加減淨額（未稅）",`<b>${netEx>=0?"+":""}${formatMoney(rounded(netEx,round),d)}</b>`],
     ["追加減淨額（含稅）",`${netIn>=0?"+":""}${formatMoney(rounded(netIn,round),d)}`],
@@ -1220,7 +1224,7 @@ function calcDateConvert(){const mode=byId("dateConvertMode").value,raw=byId("da
 const calculators={
   quoteNameA:calcQuotes,quotePriceA:calcQuotes,quoteNameB:calcQuotes,quotePriceB:calcQuotes,quoteNameC:calcQuotes,quotePriceC:calcQuotes,quoteNameD:calcQuotes,quotePriceD:calcQuotes,quoteBudget:calcQuotes,quoteBase:calcQuotes,
   taxName1:calcTax,taxItem1:calcTax,taxName2:calcTax,taxItem2:calcTax,taxName3:calcTax,taxItem3:calcTax,taxName4:calcTax,taxItem4:calcTax,taxMode:calcTax,taxRate:calcTax,taxRound:calcTax,
-  changeOriginal:calcChange,changeOriginalMode:calcChange,changeRate:calcChange,changeAdd:calcChange,changeDeduct:calcChange,changeSupervision:calcChange,changeItemsMode:calcChange,changeRound:calcChange,
+  changeOriginal:calcChange,changeOriginalMode:calcChange,changeRate:calcChange,changeAdd:calcChange,changeDeduct:calcChange,changeDeductFactor:calcChange,changeSupervision:calcChange,changeItemsMode:calcChange,changeRound:calcChange,
   negOriginal:calcNegotiation,negFinal:calcNegotiation,
   ratioMode:updateRatioMode,ratioTotal:calcRatio,ratioPart:calcRatio,ratioPercentInput:calcRatio,
   chineseAmount:calcChinese,
